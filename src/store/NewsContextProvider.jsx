@@ -13,7 +13,11 @@ function NewsContextProvider({ children }) {
 
   function handleSearchByCategory(category) {
     axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}?category=${category}`)
+      .get(`${import.meta.env.VITE_BACKEND_URL}?category=${category}`, {
+        headers: {
+          "x-api-key": import.meta.env.VITE_FRONTEND_SECRET,
+        },
+      })
       .then((res) => {
         setError(false);
         setArticles(res.data);
@@ -25,7 +29,11 @@ function NewsContextProvider({ children }) {
 
   function loadTopHeadlines() {
     axios
-      .get(import.meta.env.VITE_BACKEND_URL)
+      .get(import.meta.env.VITE_BACKEND_URL, {
+        headers: {
+          "x-api-key": import.meta.env.VITE_FRONTEND_SECRET,
+        },
+      })
       .then((res) => {
         setError(false);
         setArticles(res.data);
@@ -42,6 +50,9 @@ function NewsContextProvider({ children }) {
       .get(`${import.meta.env.VITE_BACKEND_URL}/search`, {
         params: {
           searchQuery: searchQuery,
+        },
+        headers: {
+          "x-api-key": import.meta.env.VITE_FRONTEND_SECRET,
         },
       })
       .then((res) => {
